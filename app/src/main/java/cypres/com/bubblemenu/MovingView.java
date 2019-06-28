@@ -10,10 +10,13 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 /**
  * Created by  Sigmatix on 6/7/2019.
  */
 public class MovingView extends FrameLayout {
+    private static final String TAG = MovingView.class.getSimpleName();
     private ImageView centerBubble;
     private ImageView bubble2;
     private ImageView bubble3;
@@ -30,6 +33,7 @@ public class MovingView extends FrameLayout {
     private float maxScalePercent;
     private int globalCenterX;
     private int globalCenterY;
+    private ArrayList<Object> imageViews;
 
     public MovingView(@NonNull Context context) {
         super(context);
@@ -47,8 +51,23 @@ public class MovingView extends FrameLayout {
         init();
     }
 
+    private void setupCircles(int count) {
+        imageViews = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            ImageView imageView = new ImageView(getContext());
+            imageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.insta));
+            imageViews.add(imageView);
+//            addView(imageView, circleRadius * 2, circleRadius * 2);
+
+            if (i % 7 <= 2) {
+                Log.i(TAG, "Must point " + i + " position " + i/7 + " mnacord  " + i % 7);
+            }
+        }
+    }
+
     private void init() {
-        circleRadius = 110;
+        setupCircles(90);
+        circleRadius = 65;
         centerBubble = new ImageView(getContext());
         bubble2 = new ImageView(getContext());
         bubble3 = new ImageView(getContext());
@@ -104,6 +123,10 @@ public class MovingView extends FrameLayout {
                 scaleBubble(bubble5);
             }
         });
+    }
+
+    public void setBubbleCoordinates() {
+
     }
 
 
